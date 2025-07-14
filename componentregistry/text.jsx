@@ -1,5 +1,5 @@
 export function Text({ children, className }) {
     return (
-        <p className={className}>{children}</p>
+        <p className={className || "text-gray-900"}>{children}</p>
     )
 }

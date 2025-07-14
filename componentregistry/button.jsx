@@ -1,5 +1,12 @@
-export function Button({ children, onClick, type, disabled, className }) {
+export function Button({ text, onClick, type, disabled, className }) {
     return (
-        <button onClick={onClick} type={type} disabled={disabled} className={className}>{children}</button>
+        <button
+            onClick={onClick}
+            type={type || "button"}
+            disabled={disabled}
+            className={className || "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}
+        >
+            {text}
+        </button>
     )
 }

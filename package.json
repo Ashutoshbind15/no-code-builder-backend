@@ -4,9 +4,14 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node backend/testWebsiteBuilder.js",
     "serve": "node fileserver.js",
-    "serve:dev": "node fileserver.js ./output/app 3000"
+    "serve:dev": "node fileserver.js ./output/app 3000",
+    "build": "node build.js",
+    "api": "node backend/api.js",
+    "dev": "concurrently \"npm run api\" \"npm run serve:dev\"",
+    "build:serve": "npm run build && npm run serve:dev",
+    "test:build": "npm run test && npm run build:serve"
   },
   "keywords": [],
   "author": "",
@@ -19,5 +24,8 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.11",
     "tailwindcss": "^4.1.11"
+  },
+  "optionalDependencies": {
+    "concurrently": "^7.6.0"
   }
 }
