@@ -25,6 +25,8 @@ class FileGenerator {
     isCustomComponent(type) {
         if (!type) return false;
 
+        // Todo: chack against a db row in here
+
         // First check if it's defined in the ComponentRegistry
         // We need to access the registry somehow... for now, let's use a different approach
         // Check if it's one of the known custom components
@@ -50,6 +52,7 @@ class FileGenerator {
 
     // Check if a component takes children (not self-closing)
     componentTakesChildren(type) {
+        // todo: check against a db row in here
         const componentsWithChildren = ['container'];
         return componentsWithChildren.includes(type.toLowerCase());
     }
@@ -65,6 +68,7 @@ class FileGenerator {
         // Handle stringLiteral nodes
         if (type === 'stringLiteral') {
             const value = node.value;
+            // todo: prefix the props with a prop: string
             if (typeof value === 'string' && value.startsWith('$')) {
                 const propName = value.substring(1);
                 return `{${propName}}`;
@@ -83,6 +87,8 @@ class FileGenerator {
             let finalProps = [...(props || [])];
 
             // Convert stringLiteral children to appropriate props for non-container components
+
+            // todo: remove this, not needed
             if (children && children.length > 0 && !this.componentTakesChildren(type)) {
                 children.forEach(child => {
                     if (child.type === 'stringLiteral' || child.nodeType === 'stringLiteral') {
@@ -137,9 +143,7 @@ class FileGenerator {
         const propsJSX = this.generatePropsJSX(props);
 
         // Capitalize component name if it's a custom component
-        const componentName = this.isCustomComponent(type)
-            ? type.charAt(0).toUpperCase() + type.slice(1)
-            : type;
+        const componentName = type;
 
         // Handle self-closing tags
         if (this.isSelfClosing(type)) {
@@ -195,6 +199,7 @@ class FileGenerator {
 
     // Check if tag is self-closing
     isSelfClosing(type) {
+        // todo: check against a db row in here
         if (!type) return false;
 
         const selfClosingTags = ['img', 'input', 'br', 'hr', 'meta', 'link'];
@@ -205,11 +210,13 @@ class FileGenerator {
     generateImports(tree) {
         const componentImports = new Map(); // Map to track components and their source directories
 
+        // todo: won't this import all the imported stuff from the whole tree? It essentially doesn't stop at the first level of children...
         const collectComponents = (node) => {
             if (!node) return;
 
             if (this.isCustomComponent(node.type)) {
                 // Determine the import source based on component type
+                // Make this dynamic, and not hardcoded
                 const isBuiltIn = ['card', 'button', 'text', 'container', 'input', 'icon', 'imagecontainer'].includes(node.type.toLowerCase());
                 const importSource = isBuiltIn ? 'componentregistry' : 'usercomponents';
                 componentImports.set(node.type, importSource);
@@ -369,6 +376,7 @@ ${jsx}
             // Handle variable substitution
             if (typeof value === 'string' && value.startsWith('$')) {
                 const propName = value.substring(1);
+                // todo: check when the names aren't consistent
                 return ` ${prop.name}={${propName}}`;
             }
 

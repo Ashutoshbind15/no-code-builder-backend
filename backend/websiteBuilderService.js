@@ -75,6 +75,12 @@ class WebsiteBuilderService {
         parentNode.children.push(finalNode);
 
         // Generate updated files
+
+        // Todo: dont write every time, also account for the fact that addition or any change in that matter,
+        // could be either just a node addition to a parent node that supports children,
+        // or it could be a change to a node that is a custom component, i.e. looks good but ensure we allow structureal changes as well
+
+        // also, we currently, rerender the whole app, which is not efficient,
         this.fileGenerator.writeGeneratedApp(this.websiteTree);
 
         return finalNode.nodeId;
