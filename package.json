@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "node backend/testWebsiteBuilder.js",
+    "test": "vitest",
     "serve": "node fileserver.js",
     "serve:dev": "node fileserver.js ./output/app 3000",
     "build": "node build.js",
@@ -18,6 +18,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "jest": "^30.0.4",
     "vite": "^6.3.5",
     "vite-plugin-solid": "^2.11.7"
   },
@@ -27,7 +28,8 @@
     "@babel/traverse": "^7.28.0",
     "@babel/types": "^7.28.1",
     "@tailwindcss/vite": "^4.1.11",
-    "tailwindcss": "^4.1.11"
+    "tailwindcss": "^4.1.11",
+    "vitest": "^3.2.4"
   },
   "optionalDependencies": {
     "concurrently": "^7.6.0"
